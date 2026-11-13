@@ -1,0 +1,56 @@
+name: macOS build and release
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Apple Silicon runner
+        run: test "$(uname -m)" = arm64
+      - name: Native tests and app build
+        run: ./build.command
+      - name: Undefined behavior sanitizer
+        run: SNOW_TEST_FLAGS='-fsanitize=undefined -fno-sanitize-recover=all' ./test.command
+      - name: Production Metal shader and pipeline self-test
+        run: ./DesktopSnow.app/Contents/MacOS/DesktopSnow --metal-self-test
+      - name: Verify signature and package
+        run: |
+          codesign --verify --deep --strict --verbose=2 DesktopSnow.app
+          file DesktopSnow.app/Contents/MacOS/DesktopSnow
+          mkdir -p dist
+          ditto -c -k --sequesterRsrc --keepParent DesktopSnow.app dist/DesktopSnow-3.3.0-arm64.zip
+          shasum -a 256 dist/*.zip | tee dist/SHA256SUMS
+          mkdir roundtrip
+          ditto -x -k dist/DesktopSnow-3.3.0-arm64.zip roundtrip
+          test -x roundtrip/DesktopSnow.app/Contents/MacOS/DesktopSnow
+          codesign --verify --deep --strict roundtrip/DesktopSnow.app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DesktopSnow-arm64
+          path: dist/*
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: DesktopSnow-arm64
+          path: dist
+      - name: Publish tested prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" dist/* --verify-tag --prerelease --title "DesktopSnow 3.3.0 preview" --notes "Apple Silicon only. Native C++ tests, UBSan, Swift/AppKit build and production Metal pipeline self-test passed in macOS CI. Ad-hoc signed; not notarized. Interactive GUI/multi-monitor visual acceptance remains unverified. macOS 12 minimum deployment target; CI runs macOS 14."

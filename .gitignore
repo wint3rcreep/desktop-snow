@@ -1,0 +1,7 @@
+build/
+DesktopSnow.app/
+dist/
+roundtrip/
+.DS_Store
+__pycache__/
+*.log

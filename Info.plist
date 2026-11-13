@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>CFBundleName</key><string>DesktopSnow</string>
+<key>CFBundleDisplayName</key><string>DesktopSnow</string>
+<key>CFBundleIdentifier</key><string>io.github.wint3rcreep.DesktopSnow</string>
+<key>CFBundleVersion</key><string>330</string>
+<key>CFBundleShortVersionString</key><string>3.3.0</string>
+<key>CFBundleIconFile</key><string>DesktopSnow.icns</string>
+<key>CFBundleExecutable</key><string>DesktopSnow</string>
+<key>CFBundlePackageType</key><string>APPL</string>
+<key>LSMinimumSystemVersion</key><string>12.0</string>
+<key>LSUIElement</key><true/>
+<key>NSHighResolutionCapable</key><true/>
+<key>NSScreenCaptureUsageDescription</key><string>DesktopSnow использует геометрию окон для снега на их верхних границах. Изображения экрана не записываются.</string>
+</dict></plist>
