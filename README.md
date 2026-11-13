@@ -9,7 +9,7 @@ brew install --cask wint3rcreep/tap/desktopsnow
 open -a DesktopSnow
 ```
 
-The initial 3.3.0 preview supports **arm64 only**, with a macOS 12 Monterey minimum deployment target. Native CI runs on macOS 14; macOS 12 runtime compatibility is not separately tested. Intel binaries are not distributed.
+The initial 3.3.0 preview supports **arm64 only**, with a macOS 12 Monterey minimum deployment target. Native CI runs on macOS 15; macOS 12 runtime compatibility is not separately tested. Intel binaries are not distributed.
 
 This preview is ad-hoc signed, **not Apple-notarized**. Gatekeeper can block first launch. Review the source/release and use the macOS Privacy & Security “Open Anyway” approval if you trust it; do not disable Gatekeeper or automatically strip quarantine. Grant Screen Recording permission to enable window geometry detection, then relaunch. The app queries window geometry; it does not record screen images. Use the menu-bar snow icon for settings and Quit. Interaction is opt-in; Escape returns to click-through.
 

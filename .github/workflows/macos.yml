@@ -9,7 +9,7 @@ permissions:
   contents: read
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
@@ -53,4 +53,4 @@ jobs:
           GH_REPO: ${{ github.repository }}
           TAG: ${{ github.ref_name }}
         run: |
-          gh release create "$TAG" dist/* --verify-tag --prerelease --title "DesktopSnow 3.3.0 preview" --notes "Apple Silicon only. Native C++ tests, UBSan, Swift/AppKit build and production Metal pipeline self-test passed in macOS CI. Ad-hoc signed; not notarized. Interactive GUI/multi-monitor visual acceptance remains unverified. macOS 12 minimum deployment target; CI runs macOS 14."
+          gh release create "$TAG" dist/* --verify-tag --prerelease --title "DesktopSnow 3.3.0 preview" --notes "Apple Silicon only. Native C++ tests, UBSan, Swift/AppKit build and production Metal pipeline self-test passed in macOS CI. Ad-hoc signed; not notarized. Interactive GUI/multi-monitor visual acceptance remains unverified. macOS 12 minimum deployment target; CI runs macOS 15."
