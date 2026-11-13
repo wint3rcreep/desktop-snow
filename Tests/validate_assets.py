@@ -3,7 +3,7 @@ import plistlib,struct
 from PIL import Image
 root=Path(__file__).resolve().parents[1]
 p=plistlib.loads((root/'Info.plist').read_bytes())
-assert p['CFBundleShortVersionString']=='3.3' and p['CFBundleIconFile']=='DesktopSnow.icns'
+assert p['CFBundleShortVersionString']=='3.3.0' and p['CFBundleIconFile']=='DesktopSnow.icns'
 for n in (16,32,128,256,512):
  for scale in (1,2):
   f=root/'Assets/DesktopSnow.iconset'/f'icon_{n}x{n}{"@2x" if scale==2 else ""}.png'
